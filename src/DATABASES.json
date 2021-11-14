@@ -1,0 +1,88 @@
+[
+  {
+    "name": "database1",
+    "tables": [
+      {
+        "name": "table1",
+        "columns": [
+          {
+            "name": "integer",
+            "type": "integer"
+          },
+          {
+            "name": "real",
+            "type": "real"
+          },
+          {
+            "name": "char",
+            "type": "char"
+          },
+          {
+            "name": "string",
+            "type": "string"
+          },
+          {
+            "name": "textfile",
+            "type": "textfile"
+          },
+          {
+            "name": "intInterval",
+            "type": "intInterval"
+          }
+        ],
+        "rows": [
+          [
+            {
+              "value": 1
+            },
+            {
+              "value": 2.44447
+            },
+            {
+              "value": "a"
+            },
+            {
+              "value": "anton"
+            },
+            {
+              "filename": "text.txt",
+              "data": "Hello dear Mr. Smith! @### 999)))))"
+            },
+            {
+              "minValue": 50,
+              "maxValue": 805
+            }
+          ],
+          [
+            {
+              "value": 2
+            },
+            {
+              "value": 9.94024092141
+            },
+            {
+              "value": "y"
+            },
+            {
+              "value": "anaconda"
+            },
+            {
+              "filename": "program.py",
+              "data": "print(\"Hello world!\")"
+            },
+            {
+              "minValue": -50,
+              "maxValue": 16
+            }
+          ]
+        ]
+      },
+      {
+      }
+    ]
+  },
+  {
+  },
+  {
+  }
+]
