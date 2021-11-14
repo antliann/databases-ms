@@ -20,5 +20,6 @@ module.exports = {
     'import/prefer-default-export': 0,
     'default-param-last': 0,
     'react/prop-types': 0,
+    'react/jsx-key': 1,
   },
 };

@@ -15,7 +15,7 @@ const App = () => {
       <h3>Databases list:</h3>
       <div className="database new">+ Add new database</div>
       {databases.map((db, index) => (
-        <div key={'db' + index} onClick={chooseDb(index)}
+        <div key={`db-${index}-${db.name}`} onClick={chooseDb(index)}
              className={"database" + (dbIndex === index ? " bold" : "")}>{db.name || 'Unnamed database'}</div>
       ))}
       <DBTables dbIndex={dbIndex}/>
