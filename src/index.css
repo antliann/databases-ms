@@ -23,6 +23,8 @@ code {
 
 .new {
   color: #4d8835;
+  padding: 5px;
+  margin: 10px 0 5px;
 }
 
 .tables {
@@ -63,4 +65,14 @@ th, td {
 
 pre {
   overflow-y: scroll;
+}
+
+i {
+  color: gray;
+}
+
+input {
+  margin: 5px;
+  padding: 8px;
+  font-size: 14px;
 }

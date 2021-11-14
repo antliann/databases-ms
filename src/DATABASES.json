@@ -68,7 +68,7 @@
             },
             {
               "filename": "program.py",
-              "data": "print(\"Hello world!\")"
+              "data": "print(\"Hello world!\")\nprint(\"123\")"
             },
             {
               "minValue": -50,

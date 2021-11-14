@@ -1,10 +1,13 @@
 import React, { useState } from 'react';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { DataDisplayer } from './DataDisplayer';
 
 export const DBTables = ({ dbIndex }) => {
+  const dispatch = useDispatch();
+
   const [isFileOpen, setIsFileOpen] = useState(false);
   const [file, setFile] = useState({});
+  const [tableName, setTableName] = useState('');
 
   const tables = useSelector((store) => store[dbIndex]?.tables) || [];
 
@@ -15,13 +18,19 @@ export const DBTables = ({ dbIndex }) => {
 
   const handleFileClose = () => setIsFileOpen(false);
 
+  const createTable = () => {
+    dispatch({ type: 'CREATE_TABLE', name: tableName, dbIndex });
+    setTableName('');
+  };
+
   return (
     <div className="tables">
       {isFileOpen && (
         <div className="file">
           <button onClick={handleFileClose}>Close file</button>
           {file?.filename}
-          <pre><code style={{ margin: 0 }}>{file?.data}</code></pre>
+          {file?.data ? <pre><code style={{ margin: 0, lineHeight: 1.5 }}>{file?.data}</code></pre> :
+            <div><i>The file is empty</i></div>}
         </div>
       )}
       {
@@ -53,6 +62,14 @@ export const DBTables = ({ dbIndex }) => {
           </div>
         ))
       }
+      <div className="database">
+        <input value={tableName} onChange={({ target }) => setTableName(target.value)}/>
+        <div style={{ margin: 5 }}>
+          <button disabled={!tableName} className="new" style={{ opacity: tableName ? 1 : 0.3 }} onClick={createTable}>
+            + Add new table
+          </button>
+        </div>
+      </div>
     </div>
   );
 };

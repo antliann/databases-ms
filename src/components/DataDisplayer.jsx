@@ -11,7 +11,7 @@ export const DataDisplayer = ({ data, type, handleFileOpen }) => {
       );
     case 'intInterval':
       return (
-        <div>{data.minValue} .. {data.maxValue}</div>);
+        <div>{data.minValue}..{data.maxValue}</div>);
     default:
       return <div>{data?.value}</div>;
   }
