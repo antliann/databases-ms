@@ -1,12 +1,12 @@
 import React from 'react';
 
-export const DataDisplayer = ({ data, type }) => {
+export const DataDisplayer = ({ data, type, handleFileOpen }) => {
   switch (type) {
     case 'textfile':
       return (
         <div>
           <div style={{ margin: 5 }}>{data?.filename}</div>
-          <button style={{ margin: 5 }}>Open file</button>
+          <button style={{ margin: 5 }} onClick={handleFileOpen(data)}>Open file</button>
         </div>
       );
     case 'intInterval':

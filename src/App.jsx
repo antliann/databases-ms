@@ -11,8 +11,8 @@ const App = () => {
 
   return (
     <>
-      <h2>Database management system by Anton Liannoi</h2>
-      <h3>Databases list:</h3>
+      <h2>Database management system by Anton Liannoi (variant 19)</h2>
+      <h3 style={{ margin: '45px 20px 30px 20px' }}>Databases list:</h3>
       <div className="database new">+ Add new database</div>
       {databases.map((db, index) => (
         <div key={`db-${index}-${db.name}`} onClick={chooseDb(index)}
