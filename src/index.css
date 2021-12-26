@@ -143,3 +143,14 @@ input {
   bottom: -5px;
   left: calc(50% - 40px);
 }
+
+input[type='file'] {
+  color: transparent;
+  width: 110px;
+}
+
+.file-label {
+  position: relative;
+  left: -25px;
+  font-size: 20px;
+}

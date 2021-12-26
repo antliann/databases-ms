@@ -17,10 +17,21 @@ export const AddRowModal = ({ type, initVal, closeModal, cellId }) => {
   const [secondVal, setSecondVal] = useState(initVal?.maxValue || '');
   const [isError, setIsError] = useState(0);
 
+  const [selectedFile, setSelectedFile] = useState(null);
+
+  const changeHandler = (event) => {
+    setSelectedFile(event.target.files[0]);
+  };
+
   const renderInputs = () => {
     switch (type) {
       case 'textfile':
-        return;
+        return (
+          <>
+            <input id="file-input" type="file" name="Upload file" accept="text/plain" onChange={changeHandler}/>
+            <label htmlFor="file-input" className="file-label">{initVal.filename || 'No file chosen'}</label>
+          </>
+        );
       case 'intInterval':
         return (
           <>
@@ -53,8 +64,12 @@ export const AddRowModal = ({ type, initVal, closeModal, cellId }) => {
 
   const saveValue = () => {
     switch (type) {
-      case 'textFile':
-        saveDataIntoCell({ filename: '', data: '' });
+      case 'textfile':
+        const reader = new FileReader();
+        reader.onload = ({ target }) => {
+          saveDataIntoCell({ filename: selectedFile.name, data: target.result });
+        };
+        reader.readAsText(selectedFile);
         closeModal();
         return;
       case 'intInterval':
