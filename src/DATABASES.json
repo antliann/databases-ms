@@ -1,31 +1,39 @@
 [
   {
+    "id": "1",
     "name": "database1",
     "tables": [
       {
+        "id": "1-1",
         "name": "table1",
         "columns": [
           {
+            "id": "1-1-1",
             "name": "integer",
             "type": "integer"
           },
           {
+            "id": "1-1-2",
             "name": "real",
             "type": "real"
           },
           {
+            "id": "1-1-3",
             "name": "char",
             "type": "char"
           },
           {
+            "id": "1-1-4",
             "name": "string",
             "type": "string"
           },
           {
+            "id": "1-1-5",
             "name": "textfile",
             "type": "textfile"
           },
           {
+            "id": "1-1-6",
             "name": "intInterval",
             "type": "intInterval"
           }
@@ -33,56 +41,62 @@
         "rows": [
           [
             {
-              "value": 1
+              "id": "1-1-1-1",
+              "value": "1"
             },
             {
-              "value": 2.44447
+              "id": "1-1-2-1",
+              "value": "2.44447"
             },
             {
+              "id": "1-1-3-1",
               "value": "a"
             },
             {
+              "id": "1-1-4-1",
               "value": "anton"
             },
             {
+              "id": "1-1-5-1",
               "filename": "text.txt",
               "data": "Hello dear Mr. Smith! @### 999)))))"
             },
             {
-              "minValue": 50,
-              "maxValue": 805
+              "id": "1-1-6-1",
+              "minValue": "50",
+              "maxValue": "805"
             }
           ],
           [
             {
-              "value": 2
+              "id": "1-1-2-1",
+              "value": "2"
             },
             {
-              "value": 9.94024092141
+              "id": "1-1-2-2",
+              "value": "9.94024092141"
             },
             {
+              "id": "1-1-2-3",
               "value": "y"
             },
             {
+              "id": "1-1-2-4",
               "value": "anaconda"
             },
             {
+              "id": "1-1-2-5",
               "filename": "program.py",
               "data": "print(\"Hello world!\")\nprint(\"123\")"
             },
             {
-              "minValue": -50,
-              "maxValue": 16
+              "id": "1-1-2-6",
+              "minValue": "-50",
+              "maxValue": "16"
             }
           ]
         ]
-      },
-      {
       }
     ]
-  },
-  {
-  },
-  {
   }
 ]

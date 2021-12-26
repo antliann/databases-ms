@@ -24,7 +24,13 @@ code {
 .new {
   color: #4d8835;
   padding: 5px;
-  margin: 10px 0 5px;
+  margin: 10px 10px 5px;
+}
+
+.cancel {
+  color: #e70000;
+  padding: 5px;
+  margin: 10px 10px 5px;
 }
 
 .tables {
@@ -49,6 +55,7 @@ table {
 
 th, td {
   border: solid 1px black;
+  text-align: center;
 }
 
 .file {
@@ -61,6 +68,7 @@ th, td {
   border: 100px solid rgba(0, 0, 0, 0.5);
   background-clip: padding-box;
   background-color: white;
+  z-index: 2;
 }
 
 pre {
@@ -75,4 +83,50 @@ input {
   margin: 5px;
   padding: 8px;
   font-size: 14px;
+}
+
+.bg {
+  position: absolute;
+  top: -20px;
+  bottom: -20px;
+  left: -20px;
+  right: -20px;
+  z-index: 10;
+  background-color: rgba(0, 0, 0, 0.4);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.modal {
+  background-color: white;
+  border-radius: 10px;
+  padding: 0 20px;
+  height: 300px;
+  width: 600px;
+  position: relative;
+  align-items: center;
+}
+
+.buttons {
+  position: absolute;
+  bottom: -10px;
+  margin-left: 130px;
+  width: 600px;
+}
+
+.buttons > * {
+  margin-right: 200px;
+}
+
+.modal input {
+  margin: 20px;
+  padding: 10px;
+  font-size: 20px;
+  outline: none;
+}
+
+.error {
+  border: 2px solid red;
+  border-radius: 3px;
 }
