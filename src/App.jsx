@@ -30,10 +30,15 @@ const App = () => {
         </div>
       </div>
       {databases?.map((db, index) => (
-        <div key={`db-${index}-${db.name}`} onClick={chooseDb(index)}
-             className={"database" + (dbIndex === index ? " bold" : "")}>{db.name || 'Unnamed database'}</div>
+        <div
+          key={`db-${index}-${db.name}`}
+          onClick={chooseDb(index)}
+          className={"database" + (dbIndex === index ? " bold" : "")}
+        >
+          {db.name || 'Unnamed database'}
+        </div>
       ))}
-      <DBTables dbIndex={dbIndex}/>
+      <DBTables dbIndex={dbIndex + 1}/>
     </>
   );
 };

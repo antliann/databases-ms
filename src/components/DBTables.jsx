@@ -6,6 +6,8 @@ import { AddRowModal } from './AddRowModal';
 export const DBTables = ({ dbIndex }) => {
   const dispatch = useDispatch();
 
+  const [modalData, setModalData] = useState(null);
+
   const [isFileOpen, setIsFileOpen] = useState(false);
   const [file, setFile] = useState({});
   const [tableName, setTableName] = useState('');
@@ -24,9 +26,22 @@ export const DBTables = ({ dbIndex }) => {
     setTableName('');
   };
 
+  const editCell = (data) => () => setModalData(data);
+
+  const closeModal = () => setModalData(null);
+
   return (
     <>
-      <AddRowModal/>
+      {
+        modalData && (
+          <AddRowModal
+            cellId={modalData?.cellId}
+            initVal={modalData?.data}
+            type={modalData?.type}
+            closeModal={closeModal}
+          />
+        )
+      }
       <div className="tables">
         {isFileOpen && (
           <div className="file">
@@ -46,13 +61,13 @@ export const DBTables = ({ dbIndex }) => {
           </div>
         </div>
         {
-          tables.map((table, index) => (
-            <div key={`table-${table.name}-${index}`}>
+          tables.map((table, tableIndex) => (
+            <div key={`table-${table.name}-${tableIndex}`}>
               <h3>{table.name || 'Unnamed table'}</h3>
               <table>
                 <tr>
                   {table.columns?.map((colObj) => (
-                    <th key={`table-${table.name}-${index}-header-${colObj.name}`}>
+                    <th key={`table-${table.id}-${tableIndex}-header-${colObj.name}`}>
                       <div className="bold">{colObj.name}</div>
                     </th>
                   ))}
@@ -61,12 +76,25 @@ export const DBTables = ({ dbIndex }) => {
                   </th>
                 </tr>
                 {
-                  table.rows?.map((row) => (
-                    <tr key={`table-${table.name}-${index}-row-${row}`}>
+                  table.rows?.map((row, rowIndex) => (
+                    <tr key={`table-${table.id}-${tableIndex}-row-${row}`}>
                       {
-                        row.map((col, index) => (
-                          <td key={`table-${table.name}-${index}-cell-${row}-${col}`}>
-                            <DataDisplayer data={col} type={table.columns[index].type} handleFileOpen={handleFileOpen}/>
+                        row.map((col, colIndex) => (
+                          <td key={`table-${table.id}-${colIndex}-cell-${row}-${col}`}>
+                            <DataDisplayer
+                              data={col}
+                              type={table.columns[colIndex].type}
+                              handleFileOpen={handleFileOpen}
+                            />
+                            <button
+                              onClick={editCell({
+                                data: col,
+                                cellId: { dbIndex, tableIndex, rowIndex, colIndex },
+                                type: table.columns[colIndex].type
+                              })}
+                            >
+                              Edit value
+                            </button>
                           </td>
                         ))
                       }
@@ -77,7 +105,7 @@ export const DBTables = ({ dbIndex }) => {
                   !table.rows?.length || (
                     <tr>
                       {table.columns?.map((colObj) => (
-                        <td key={`table-${table.name}-${index}-footer-${colObj.name}`}>
+                        <td key={`table-${table.name}-${tableIndex}-footer-${colObj.name}`}>
                           <button>Add value</button>
                         </td>
                       ))}

@@ -1,5 +1,3 @@
-import { dataTypes } from './dataTypes';
-
 export class Table {
   constructor(globalState, dbIndex, name) {
     this.globalState = globalState;
@@ -13,10 +11,5 @@ export class Table {
     stateDeepCopy[this.dbIndex].tables.push({ name: this.name, columns: [], rows: [] });
 
     return stateDeepCopy;
-  }
-
-  validate(value) {
-    const regexToMatch = dataTypes.find((el) => el.type === this.type)?.regex;
-    return value.match(regexToMatch);
   }
 }

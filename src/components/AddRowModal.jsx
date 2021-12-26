@@ -1,12 +1,21 @@
-import React, { useCallback, useState } from 'react';
-import { dataTypes } from '../classes/dataTypes';
+import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
 
-export const AddRowModal = ({ type, isOpen, initVal, closeModal, cellId }) => {
+export const regex = {
+  integer: /^-?\d+$/,
+  real: /^-?\d+\.\d+$/,
+  char: /^.$/,
+  string: /^.*$/,
+};
+
+export const AddRowModal = ({ type, initVal, closeModal, cellId }) => {
   const dispatch = useDispatch();
 
-  const [currentValue, setValue] = useState(initVal);
-  const [isError, setIsError] = useState(false);
+  const [currentValue, setValue] = useState(initVal?.value || '');
+
+  const [firstVal, setFirstValue] = useState(initVal?.minValue || '');
+  const [secondVal, setSecondVal] = useState(initVal?.maxValue || '');
+  const [isError, setIsError] = useState(0);
 
   const renderInputs = () => {
     switch (type) {
@@ -14,13 +23,27 @@ export const AddRowModal = ({ type, isOpen, initVal, closeModal, cellId }) => {
         return;
       case 'intInterval':
         return (
-          <input/>
+          <div>
+            <input
+              value={firstVal}
+              onChange={handleInputChange(setFirstValue)}
+              placeholder={`${type} value`}
+              className={[1, 3].includes(isError) ? 'error' : ''}
+            />
+            -
+            <input
+              value={secondVal}
+              onChange={handleInputChange(setSecondVal)}
+              placeholder={`${type} value`}
+              className={[2, 3].includes(isError) ? 'error' : ''}
+            />
+          </div>
         );
       default:
         return (
           <input
             value={currentValue}
-            onChange={handleInputChange}
+            onChange={handleInputChange(setValue)}
             placeholder={`${type} value`}
             className={isError ? 'error' : ''}
           />
@@ -28,35 +51,43 @@ export const AddRowModal = ({ type, isOpen, initVal, closeModal, cellId }) => {
     }
   };
 
-  const saveValue = useCallback(() => {
+  const saveValue = () => {
     switch (type) {
       case 'textFile':
         saveDataIntoCell({ filename: '', data: '' });
         return;
       case 'intInterval':
-        saveDataIntoCell({ minValue: '', maxValue: '' });
+        if ((regex.integer.test(firstVal) && regex.integer.test(secondVal)) || Number(firstVal) > Number(secondVal)) {
+          setIsError(3);
+          return;
+        }
+        if (regex.integer.test(firstVal)) {
+          setIsError(1);
+          return;
+        }
+        if (regex.integer.test(secondVal)) {
+          setIsError(2);
+          return;
+        }
+        saveDataIntoCell({ minValue: firstVal, maxValue: secondVal });
         return;
       default:
-        if (!isValid()) {
-          setIsError(true);
+        if (!regex[type].test(currentValue)) {
+          setIsError(3);
           return;
         }
         saveDataIntoCell({ value: currentValue });
     }
-  }, []);
+  };
 
-  if (!!isOpen) return null;
-
-  const handleInputChange = ({ target }) => {
-    setIsError(false);
-    setValue(target.value);
+  const handleInputChange = (setter) => ({ target }) => {
+    setIsError(0);
+    setter(target.value);
   };
 
   const saveDataIntoCell = (data) => {
     dispatch({ type: 'SAVE_CELL', cellId, data });
   };
-
-  const isValid = (value) => dataTypes.find((el) => el.type === type)?.regex.test(value);
 
   return (
     <div className="bg">
