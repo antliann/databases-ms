@@ -80,7 +80,10 @@ export const DBTables = ({ dbIndex }) => {
                     <tr key={`table-${table.id}-${tableIndex}-row-${row}`}>
                       {
                         row.map((col, colIndex) => (
-                          <td key={`table-${table.id}-${colIndex}-cell-${row}-${col}`}>
+                          <td
+                            key={`table-${table.id}-${colIndex}-cell-${row}-${col}`}
+                            style={{ position: 'relative', paddingBottom: 40, minWidth: 120 }}
+                          >
                             <DataDisplayer
                               data={col}
                               type={table.columns[colIndex].type}
@@ -92,6 +95,11 @@ export const DBTables = ({ dbIndex }) => {
                                 cellId: { dbIndex, tableIndex, rowIndex, colIndex },
                                 type: table.columns[colIndex].type
                               })}
+                              style={{
+                                position: 'absolute',
+                                bottom: -5,
+                                left: 'calc(50% - 58px)'
+                              }}
                             >
                               Edit value
                             </button>
@@ -100,20 +108,6 @@ export const DBTables = ({ dbIndex }) => {
                       }
                     </tr>
                   ))
-                }
-                {
-                  !table.rows?.length || (
-                    <tr>
-                      {table.columns?.map((colObj) => (
-                        <td key={`table-${table.name}-${tableIndex}-footer-${colObj.name}`}>
-                          <button>Add value</button>
-                        </td>
-                      ))}
-                      <td>
-                        <button className="new">Save row</button>
-                      </td>
-                    </tr>
-                  )
                 }
                 {
                   !table.columns?.length || (
