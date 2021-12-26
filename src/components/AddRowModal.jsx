@@ -55,6 +55,7 @@ export const AddRowModal = ({ type, initVal, closeModal, cellId }) => {
     switch (type) {
       case 'textFile':
         saveDataIntoCell({ filename: '', data: '' });
+        closeModal();
         return;
       case 'intInterval':
         if ((!regex.integer.test(firstVal) && !regex.integer.test(secondVal)) || Number(firstVal) > Number(secondVal)) {
@@ -70,6 +71,7 @@ export const AddRowModal = ({ type, initVal, closeModal, cellId }) => {
           return;
         }
         saveDataIntoCell({ minValue: firstVal, maxValue: secondVal });
+        closeModal();
         return;
       default:
         if (!regex[type].test(currentValue)) {
@@ -77,6 +79,7 @@ export const AddRowModal = ({ type, initVal, closeModal, cellId }) => {
           return;
         }
         saveDataIntoCell({ value: currentValue });
+        closeModal();
     }
   };
 
@@ -97,7 +100,8 @@ export const AddRowModal = ({ type, initVal, closeModal, cellId }) => {
         {renderInputs()}
         <div className="buttons">
           <button className="cancel" onClick={closeModal}>Cancel</button>
-          <button className="new" onClick={saveValue} disabled={isError} style={{ opacity: isError ? 0.6 : 1 }}>Save
+          <button className="new" onClick={saveValue} disabled={isError} style={{ opacity: isError ? 0.6 : 1 }}>
+            Save
           </button>
         </div>
       </div>

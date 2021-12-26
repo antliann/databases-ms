@@ -3,10 +3,14 @@ import { useDispatch, useSelector } from 'react-redux';
 import { DataDisplayer } from './DataDisplayer';
 import { AddRowModal } from './AddRowModal';
 
+import pencil from '../pencil.png';
+import { AddColumnModal } from './AddColumnModal';
+
 export const DBTables = ({ dbIndex }) => {
   const dispatch = useDispatch();
 
   const [modalData, setModalData] = useState(null);
+  const [colData, setColData] = useState(null);
 
   const [isFileOpen, setIsFileOpen] = useState(false);
   const [file, setFile] = useState({});
@@ -28,6 +32,9 @@ export const DBTables = ({ dbIndex }) => {
 
   const editCell = (data) => () => setModalData(data);
 
+  const handleAddCol = () => setColData({ name: '', type: '' });
+  const closeAddColModal = () => setColData(null);
+
   const closeModal = () => setModalData(null);
 
   return (
@@ -40,6 +47,11 @@ export const DBTables = ({ dbIndex }) => {
             type={modalData?.type}
             closeModal={closeModal}
           />
+        )
+      }
+      {
+        colData && (
+          <AddColumnModal props={colData} closeModal={closeAddColModal}/>
         )
       }
       <div className="tables">
@@ -72,7 +84,7 @@ export const DBTables = ({ dbIndex }) => {
                     </th>
                   ))}
                   <th>
-                    <button className="new">Add column</button>
+                    <button className="new" onClick={handleAddCol}>Add column</button>
                   </th>
                 </tr>
                 {
@@ -90,18 +102,14 @@ export const DBTables = ({ dbIndex }) => {
                               handleFileOpen={handleFileOpen}
                             />
                             <button
+                              className="edit-btn"
                               onClick={editCell({
                                 data: col,
                                 cellId: { dbIndex, tableIndex, rowIndex, colIndex },
                                 type: table.columns[colIndex].type
                               })}
-                              style={{
-                                position: 'absolute',
-                                bottom: -5,
-                                left: 'calc(50% - 58px)'
-                              }}
                             >
-                              Edit value
+                              <img src={pencil} height="10px" width="10px" alt="Edit" style={{ margin: 5 }}/>
                             </button>
                           </td>
                         ))

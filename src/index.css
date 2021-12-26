@@ -126,7 +126,20 @@ input {
   outline: none;
 }
 
+.modal select {
+  margin: 20px;
+  padding: 10px;
+  font-size: 20px;
+  outline: none;
+}
+
 .error {
   border: 2px solid red;
   border-radius: 3px;
+}
+
+.edit-btn {
+  position: absolute;
+  bottom: -5px;
+  left: calc(50% - 40px);
 }

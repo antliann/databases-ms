@@ -38,7 +38,7 @@ const App = () => {
           {db.name || 'Unnamed database'}
         </div>
       ))}
-      <DBTables dbIndex={dbIndex + 1}/>
+      <DBTables dbIndex={dbIndex}/>
     </>
   );
 };
