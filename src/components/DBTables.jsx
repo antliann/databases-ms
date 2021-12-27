@@ -41,6 +41,8 @@ export const DBTables = ({ dbIndex }) => {
     });
   };
 
+  const deleteTable = (tableID) => () => dispatch({ type: 'DELETE_TABLE', tableID, dbIndex });
+
   const closeAddColModal = () => setColData(null);
 
   const closeModal = () => setModalData(null);
@@ -89,7 +91,9 @@ export const DBTables = ({ dbIndex }) => {
         {
           tables.map((table, tableIndex) => (
             <div key={`table-${table.name}-${tableIndex}`}>
-              <h3>{table.name || 'Unnamed table'}</h3>
+              <h3>{table.name || 'Unnamed table'}
+                <button onClick={deleteTable(table.id)}>Delete table</button>
+              </h3>
               <table>
                 <tr>
                   {table.columns?.map((colObj, colIndex) => (

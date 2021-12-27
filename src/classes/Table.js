@@ -17,14 +17,14 @@ export class Table {
     return this.databases;
   }
 
-  saveCell(row, col, data) {
-    this.table.rows[row][col] = data;
+  addRow() {
+    this.table.rows.push(Array(this.table.columns.length).fill({}));
 
     return this.databases;
   }
 
-  addRow() {
-    this.table.rows.push(Array(this.table.columns.length).fill({}));
+  saveCell(row, col, data) {
+    this.table.rows[row][col] = data;
 
     return this.databases;
   }

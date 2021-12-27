@@ -22,4 +22,12 @@ export class Database {
 
     return this.databases;
   }
+
+  deleteTable(tableID) {
+    const dbTables = this.databases[this.dbIndex].tables;
+
+    this.databases[this.dbIndex].tables = dbTables.filter((table) => table.id !== tableID);
+
+    return this.databases;
+  }
 }
