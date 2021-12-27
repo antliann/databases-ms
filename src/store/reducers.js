@@ -28,6 +28,13 @@ export const rootReducer = (state = initialState, action) => {
 
       return table.addCol(colName, colType);
 
+    case 'EDIT_COLUMN':
+      const { dbIndex: dbIndexColEd, tableID: tableIDColEd, colName: colNameEd, colIndex } = action;
+
+      table = new Table(state, dbIndexColEd, tableIDColEd);
+
+      return table.editCol(colNameEd, colIndex);
+
     case 'ADD_ROW':
       const { dbIndex: dbIndexRow, tableID: tableIDRow } = action;
 

@@ -32,11 +32,9 @@ export const DBTables = ({ dbIndex }) => {
 
   const editCell = (data) => () => setModalData(data);
 
-  const handleAddCol = (tableID, colIndex = -1) => () => {
-    console.log(tableID);
+  const handleAddCol = (tableID, colIndex = -1, colObj = {}) => () => {
     setColData({
-      name: '',
-      type: '',
+      ...colObj,
       tableID,
       dbIndex,
       colIndex
@@ -96,13 +94,12 @@ export const DBTables = ({ dbIndex }) => {
                 <tr>
                   {table.columns?.map((colObj, colIndex) => (
                     <th key={`table-${table.id}-${tableIndex}-header-${colObj.name}`}>
-                      <p className="bold">{colObj.name}</p>
-                      <button
-                        className="edit-btn"
-                        onClick={handleAddCol(table.id, colIndex)}
-                      >
-                        <img src={pencil} height="10px" width="10px" alt="Edit" style={{ margin: 5 }}/>
-                      </button>
+                      <p className="bold">{colObj.name}
+                        <button onClick={handleAddCol(table.id, colIndex, colObj)} style={{ margin: 5 }}>
+                          <img src={pencil} height="10px" width="10px" alt="Edit" style={{ margin: 0 }}/>
+                        </button>
+                      </p>
+
                     </th>
                   ))}
                   {

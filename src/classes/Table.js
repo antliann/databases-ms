@@ -11,6 +11,12 @@ export class Table {
     return this.databases;
   }
 
+  editCol(newColName, colIndex) {
+    this.table.columns[colIndex].name = newColName;
+
+    return this.databases;
+  }
+
   saveCell(row, col, data) {
     this.table.rows[row][col] = data;
 
