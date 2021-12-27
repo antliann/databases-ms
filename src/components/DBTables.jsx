@@ -47,6 +47,8 @@ export const DBTables = ({ dbIndex }) => {
 
   const closeModal = () => setModalData(null);
 
+  const handleAddRow = (tableID) => () => dispatch({ type: 'ADD_ROW', tableID, dbIndex });
+
   return (
     <>
       {
@@ -145,7 +147,7 @@ export const DBTables = ({ dbIndex }) => {
                   !table.columns?.length || (
                     <tr>
                       <td colSpan={table.columns?.length}>
-                        <button className="new">Add row</button>
+                        <button className="new" onClick={handleAddRow(table.id)}>Add row</button>
                       </td>
                     </tr>
                   )

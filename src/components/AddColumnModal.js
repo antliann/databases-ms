@@ -7,7 +7,7 @@ export const AddColumnModal = ({ closeModal, tableID, name, type, dbIndex, colIn
   const dispatch = useDispatch();
 
   const [colName, setColName] = useState(name || '');
-  const [colType, setColType] = useState(type || '');
+  const [colType, setColType] = useState(type || dataTypes[0]);
 
   const handleInputChange = (setter) => ({ target }) => {
     setter(target.value);
@@ -33,7 +33,7 @@ export const AddColumnModal = ({ closeModal, tableID, name, type, dbIndex, colIn
           onChange={handleInputChange(setColName)}
           placeholder="Enter column name"
         />
-        <select disabled={!!name} onSelect={handleInputChange(setColType)}>
+        <select disabled={!!name} onChange={handleInputChange(setColType)} value={colType}>
           <option disabled>Select data type...</option>
           {dataTypes.map((type) => (
             <option key={type}>{type}</option>

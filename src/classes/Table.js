@@ -16,4 +16,10 @@ export class Table {
 
     return this.databases;
   }
+
+  addRow() {
+    this.table.rows.push(Array(this.table.columns.length).fill({}));
+
+    return this.databases;
+  }
 }

@@ -22,11 +22,18 @@ export const rootReducer = (state = initialState, action) => {
 
       return table.saveCell(cellId.rowIndex, cellId.colIndex, data);
     case 'ADD_COLUMN':
-      const { dbIndex, tableID, colName, colType } = action;
+      const { dbIndex: dbIndexCol, tableID: tableIDCol, colName, colType } = action;
 
-      table = new Table(state, dbIndex, tableID);
+      table = new Table(state, dbIndexCol, tableIDCol);
 
       return table.addCol(colName, colType);
+
+    case 'ADD_ROW':
+      const { dbIndex: dbIndexRow, tableID: tableIDRow } = action;
+
+      table = new Table(state, dbIndexRow, tableIDRow);
+
+      return table.addRow();
 
     default:
       return state;
