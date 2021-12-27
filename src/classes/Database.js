@@ -1,20 +1,25 @@
 export class Database {
-  constructor(globalState, name) {
-    this.globalState = globalState;
-    this.name = name;
+  constructor(globalState, dbIndex = -1) {
+    this.databases = JSON.parse(JSON.stringify(globalState));
+    this.dbIndex = dbIndex;
   }
 
-  createDatabase() {
+  createDatabase(name) {
     return [
       {
-        name: this.name,
+        name,
         tables: []
       },
-      ...this.globalState,
+      ...this.databases,
     ];
   }
-  
-  createTable(dbIndex) {
-    
+
+  createTable(name) {
+    const dbTables = this.databases[this.dbIndex].tables;
+    const nextID = (+dbTables[dbTables.length - 1].id || 1) + 1;
+
+    this.databases[this.dbIndex].tables.push({ id: nextID, name, columns: [], rows: [] });
+
+    return this.databases;
   }
 }

@@ -1,15 +1,19 @@
 export class Table {
-  constructor(globalState, dbIndex, name) {
-    this.globalState = globalState;
+  constructor(globalState, dbIndex, tableID = -1) {
+    this.databases = JSON.parse(JSON.stringify(globalState));
     this.dbIndex = dbIndex;
-    this.name = name;
+    this.table = this.databases[this.dbIndex].tables.find((table) => table.id === tableID);
   }
 
-  createTable() {
-    const stateDeepCopy = JSON.parse(JSON.stringify(this.globalState));
+  addCol(name, type) {
+    this.table.columns.push({ name, type });
 
-    stateDeepCopy[this.dbIndex].tables.push({ name: this.name, columns: [], rows: [] });
+    return this.databases;
+  }
 
-    return stateDeepCopy;
+  saveCell(row, col, data) {
+    this.table.rows[row][col] = data;
+
+    return this.databases;
   }
 }

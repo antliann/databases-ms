@@ -32,7 +32,17 @@ export const DBTables = ({ dbIndex }) => {
 
   const editCell = (data) => () => setModalData(data);
 
-  const handleAddCol = () => setColData({ name: '', type: '' });
+  const handleAddCol = (tableID, colIndex = -1) => () => {
+    console.log(tableID);
+    setColData({
+      name: '',
+      type: '',
+      tableID,
+      dbIndex,
+      colIndex
+    });
+  };
+
   const closeAddColModal = () => setColData(null);
 
   const closeModal = () => setModalData(null);
@@ -51,7 +61,7 @@ export const DBTables = ({ dbIndex }) => {
       }
       {
         colData && (
-          <AddColumnModal props={colData} closeModal={closeAddColModal}/>
+          <AddColumnModal closeModal={closeAddColModal} {...colData} />
         )
       }
       <div className="tables">
@@ -66,8 +76,12 @@ export const DBTables = ({ dbIndex }) => {
         <div className="database">
           <input value={tableName} onChange={({ target }) => setTableName(target.value)}/>
           <div style={{ margin: 5 }}>
-            <button disabled={!tableName} className="new" style={{ opacity: tableName ? 1 : 0.3 }}
-                    onClick={createTable}>
+            <button
+              disabled={!tableName}
+              className="new"
+              style={{ opacity: tableName ? 1 : 0.3 }}
+              onClick={createTable}
+            >
               + Add new table
             </button>
           </div>
@@ -78,18 +92,28 @@ export const DBTables = ({ dbIndex }) => {
               <h3>{table.name || 'Unnamed table'}</h3>
               <table>
                 <tr>
-                  {table.columns?.map((colObj) => (
+                  {table.columns?.map((colObj, colIndex) => (
                     <th key={`table-${table.id}-${tableIndex}-header-${colObj.name}`}>
-                      <div className="bold">{colObj.name}</div>
+                      <p className="bold">{colObj.name}</p>
+                      <button
+                        className="edit-btn"
+                        onClick={handleAddCol(table.id, colIndex)}
+                      >
+                        <img src={pencil} height="10px" width="10px" alt="Edit" style={{ margin: 5 }}/>
+                      </button>
                     </th>
                   ))}
-                  <th>
-                    <button className="new" onClick={handleAddCol}>Add column</button>
-                  </th>
+                  {
+                    !table.rows.length && (
+                      <th>
+                        <button className="new" onClick={handleAddCol(table.id)}>Add column</button>
+                      </th>
+                    )
+                  }
                 </tr>
                 {
                   table.rows?.map((row, rowIndex) => (
-                    <tr key={`table-${table.id}-${tableIndex}-row-${row}`}>
+                    <tr key={`table-${table.id}-${tableIndex}-row-${rowIndex}`}>
                       {
                         row.map((col, colIndex) => (
                           <td
@@ -105,7 +129,7 @@ export const DBTables = ({ dbIndex }) => {
                               className="edit-btn"
                               onClick={editCell({
                                 data: col,
-                                cellId: { dbIndex, tableIndex, rowIndex, colIndex },
+                                cellId: { dbIndex, tableID: table.id, rowIndex, colIndex },
                                 type: table.columns[colIndex].type
                               })}
                             >
